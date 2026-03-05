@@ -1,0 +1,156 @@
+CRC Card
+Class: TransponderReceiver
+
+Responsibilities:
+Receive high-density transponder packets from arriving aircraft
+Forward received packets for decoding
+
+Collaborators (if any):
+TransponderPacket
+PacketDecoder
+
+Assumptions (if any):
+Aircraft broadcast transponder signals.
+
+
+
+
+CRC Card
+Class: TransponderPacket
+
+Responsibilities:
+Represent a single received transponder data packet
+Provides packet data for decoding
+
+Collaborators (if any):
+TransponderReceiver
+PacketDecoder
+
+Assumptions (if any):
+Packets contains flight data for the given time.
+
+
+
+
+CRC Card
+Class: PacketDecoder
+
+Responsibilities:
+Unpack high-density transponder packet data
+Extract aircraft type and flight information from packets
+Stores data in an aircraft database
+
+Collaborators (if any):
+TransponderPacket
+AircraftDatabase
+
+Assumptions (if any):
+Packet format stays constant
+
+
+
+
+CRC Card
+Class: AircraftDatabase
+
+Responsibilities:
+Store aircraft flight information
+Update aircraft records when new data arrives
+Retrieve aircraft information when requested
+
+Collaborators (if any):
+AircraftTrack
+HazardAnalyzer
+
+Assumptions (if any):
+Each aircraft has a unique identifier.
+
+
+
+
+CRC Card
+Class: AircraftTrack
+
+Responsibilities:
+Maintain the current state of a single aircraft
+Update aircraft information with new flight data
+Provide aircraft data for display and analysis
+
+Collaborators (if any):
+AircraftDatabase
+
+Assumptions (if any):
+Each track represents one aircraft.
+
+
+
+
+CRC Card
+Class: DisplayUpdates
+
+Responsibilities:
+Updates graphic display every 10 seconds for the controller
+Request the latest aircraft data for display
+
+Collaborators (if any):
+AircraftDatabase
+ControllerDisplay
+
+Assumptions (if any):
+Display refresh interval is fixed at 10 seconds.
+
+
+
+
+CRC Card
+Class: ControllerDisplay
+
+Responsibilities:
+Display aircraft information to the controller
+Update the display when new data is available
+Detects dangerous situations 
+
+Collaborators (if any):
+DisplayUpdates
+HazardAnalyzer
+
+Assumptions (if any):
+Aircraft appear on screen as symbols.
+
+
+
+
+CRC Card
+Class: HazardAnalyzer
+
+Responsibilities:
+Analyze aircraft data to detect dangerous situations
+Identify potential aircraft conflicts
+Generate alerts for the controller
+
+Collaborators (if any):
+AircraftDatabase
+ConflictDetector
+
+Assumptions (if any):
+Dangerous situations include aircraft being too close.
+
+
+
+
+CRC Card
+Class: ConflictDetector
+
+Responsibilities:
+Compare aircraft positions to identify conflicts
+Determine when aircraft violate safety separation rules
+Report detected conflicts to the hazard analyzer
+
+Collaborators (if any):
+AircraftTrack
+HazardAnalyzer
+
+Assumptions (if any):
+Separation thresholds are predefined.
+
+
